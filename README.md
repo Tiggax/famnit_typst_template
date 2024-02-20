@@ -1,4 +1,4 @@
-# famnit_typst_template
+# FAMNIT typst template
 
 This is a template to create your own final work, *easy* fast and without any hassle.
 
