@@ -80,8 +80,6 @@
   show heading.where(level: 3): it => text(size: 12pt, it)
   show heading.where(level: 4): it => text(size: 12pt, weight: "regular", it)
 
-  show outline.entry.where(level: 1): it => upper(it)
-  
   show figure.caption: it => text(size: 10pt,it)
 
   show bibliography: set heading(numbering: "1.1")
@@ -98,10 +96,20 @@
     FAKULTETA ZA MATEMATIKO, NARAVOSLOVJE IN\
     INFORMACIJSKE TEHNOLOGIJE
 
-    #align(center + horizon)[ZAKLJUČNA NALOGA]
+    #align(center + horizon)[
+      ZAKLJUČNA NALOGA
+
+      #if text_lang == "en" {
+        [(FINAL PROJECT PAPER)]
+      }
+    ]
     #align(center + horizon)[
       #set text(size: 18pt)
       #upper(naslov)
+
+      #if text_lang == "en" {
+        [(#upper(title))]
+      }
     ]
     #set align(right + bottom)
     #upper(author)
@@ -118,6 +126,9 @@
     #align(center + horizon)[
       #set text(size: 12pt)
       Zaključna naloga
+      #if text_lang == "en" {
+        [\ (Final project paper)]
+      }
 
       #text(size: 14pt)[*#naslov*]
       
