@@ -151,8 +151,8 @@
   // ----------- zahala -----------------
   if zahvala != none {
     page()[
-      *ZAHVALA*
-      #v(2em)
+      #text(weight: "bold", size: 18pt, if text_lang == "en" [Acknowledgement] else [Zahvala])
+
       #zahvala
     ]
   }
