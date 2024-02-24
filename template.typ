@@ -366,7 +366,7 @@
   bibliography(
     bib_file, 
     style: "ieee",
-    title: "Viri in literatura"
+    title: if text_lang == "en" [Bibliography] else [Viri in literatura],
   )
 
   counter(page).update(0)
