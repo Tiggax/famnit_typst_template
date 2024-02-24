@@ -19,32 +19,38 @@
 
 
 #let project(
-  title: "Naslov zaključne naloge",
-  title_eng: "Title of the final work",
-  kljucne_besede: ("typst", "is", "awesome!"),
+  naslov: "Naslov zaključne naloge",
+  title: "Title of the final work",
+  ključne_besede: ("typst", "je", "zakon!"),
+  key_words: ("typst", "is", "awesome!"),
+  izvleček: [],
   abstract: [],
   author: "Samo Primer",
   studij: "Ime študijskega programa",
-  mentor: "",
+  mentor: "dr. Oge So-Kul",
   somentor: none,
   kraj: "Koper",
   date: datetime(day: 1, month: 1, year: 2024),
   zahvala: none,
   kratice: (
-    ("ICO", "An icon"),
-    ("TTE", "Telecom Text Engine")
+    ("short", "long")
   ),
   priloge: (),
+  bib_file: "bibliography.bib",
+  text_lang: "sl",
   body,
 ) = {
   let auth_dict = split_author(author)
   
   
-  set document(author: (author), title: title, keywords: kljucne_besede)
+  set document(author: (author), title: naslov, keywords: ključne_besede)
 
   let header(dsp) = [
     #set text(size: 10pt, fill: col.gray, top-edge: "cap-height")
-    #surname_i(author) #title.\
+    #set align(top)
+    #v(1.5cm)
+    
+    #surname_i(author) #naslov.\
     Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije,#date.year()
     #h(1fr)
     #counter(page).display(dsp)
@@ -54,25 +60,24 @@
   set page(
     numbering: "1", 
     number-align: center, 
-    //margin: (left: 3cm, top: 3cm),
+    margin: (left: 3cm, top: 3cm),
     header: header("I"),
-    header-ascent: 0cm,
     footer-descent: 1.5cm,
     footer: []
   )
   set text(
     font: "Times New Roman", 
-    lang: "sl", 
+    lang: text_lang, 
     size: 12pt
   )
 
   show footnote: it => text(size: 10pt, it)
   
   set heading(numbering: "1.1")
-  
+
   show heading.where(level: 1): it => text(size: 14pt, weight: "bold",upper(it))
-  show heading.where(level: 2): it => text(size: 14pt, weight: "regular", upper(it))
-  show heading.where(level: 3): it => text(size: 12pt, weight: "bold", it)
+  show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
+  show heading.where(level: 3): it => text(size: 12pt, it)
   show heading.where(level: 4): it => text(size: 12pt, weight: "regular", it)
 
   show outline.entry.where(level: 1): it => upper(it)
@@ -96,7 +101,7 @@
     #align(center + horizon)[ZAKLJUČNA NALOGA]
     #align(center + horizon)[
       #set text(size: 18pt)
-      #upper(title)
+      #upper(naslov)
     ]
     #set align(right + bottom)
     #upper(author)
@@ -114,9 +119,9 @@
       #set text(size: 12pt)
       Zaključna naloga
 
-      #text(size: 14pt)[*#title*]
+      #text(size: 14pt)[*#naslov*]
       
-      (#title_eng)
+      (#title)
     ]
     #v(5em)
     #align(left)[
@@ -141,16 +146,28 @@
     ]
   }
   let item_counter(target, prefix) = locate(loc => {
-        let cnt = counter(target).final(loc).first()
-        if cnt > 0 {
-          [#prefix: #cnt]
-        }
-      })
+    let cnt = counter(target).final(loc).first()
+    if cnt > 0 {
+      let a = [#prefix: #cnt]
+    style( s => {
+      let m = measure(a, s)
+      a + h(11em - m.width)
+    })
+    }
+  })
+  
   let number_of_content() = locate(loc =>  {
     let p_cnt = counter(page)
     [#p_cnt.at(query(<body_end>, loc).first().location()).first()]
   })
 
+  let content_or_none(x) = {
+    if x != none {
+      x
+    } else {
+      none
+    }
+  }
 
 
 
@@ -167,40 +184,37 @@
       
       Ime in PRIIMEK: #auth_dict.name #upper(auth_dict.surname)
 
-      Naslov zaključne naloge: #title
+      Naslov zaključne naloge: #naslov
 
-      #v(3em)
+      #v(2em)
       
       Kraj: #kraj
       
       Leto: #date.year()
+      #v(2em)
 
-      Število strani: #number_of_content()
-      #h(0.5fr)
+
+      #[Število strani: #number_of_content()]
+      #h(4.7em)
       #item_counter(figure.where(kind: image), "Število slik")
-      #h(0.5fr)
       #item_counter(figure.where(kind: table), "Število tabel")
-      #h(1fr)
       
-      #item_counter(figure.where(kind: "priloga"), "Število prilog") 
-      #h(0.5fr)
-      #item_counter(figure.where(kind: image), "Št. strani prilog")
-      #h(2fr)
-
-      #item_counter(ref.where(), "Število referenc")
-
+      #item_counter(figure.where(kind: "Priloga"), "Število prilog")
+      #item_counter(page, "Št. strani prilog")
+      
+      #item_counter(bibliography, "Število referenc")
 
       Mentor: #mentor
 
       #if somentor != none [
         Somentor: #somentor
       ]
-
-      Ključne besede: #kljucne_besede.join(", ")
+      #v(2em)
+      Ključne besede: #ključne_besede.join(", ")
 
       Izvleček: 
-      
-      #abstract
+      #v(1em)
+      #izvleček
       
       
     ]
@@ -209,7 +223,7 @@
   // ---- Ključna dokumentacija (eng)----
 
   page()[
-    #h(1fr)*Ključna dokumentacijska informacija*
+    #h(1fr)*Key document information*
     
     #box(
       stroke: black + 0.5pt,
@@ -221,31 +235,22 @@
 
       Title of the final project paper: #title
       
-      #v(3em)
+      #v(2em)
       
       Place: #kraj
       
       Year: #date.year()
+      #v(2em)
       
-      
-
-
-      // Če zaključna naloga ne vključuje slik, tabel ali prilog se polja: Number of slik, Number of tabel, Number of prilog in Number of strani prilog ne navajajo. Enako velja za angleški prevod ključne dokumentacijske *informacije.*
-
-
       Number of pages: #number_of_content()
-      #h(0.5fr)
+      #h(3.1em)
       #item_counter(figure.where(kind: image), "Number of figures")
-      #h(0.5fr)
       #item_counter(figure.where(kind: table), "Number of tables")
-      #h(1fr)
-      
-      #item_counter(page, "Number of appendix") 
-      #h(0.5fr)
-      #item_counter(figure.where(kind: image), "Number of appendix pages")
-      #h(2fr)
 
-      #item_counter(ref.where(), "Number of references") 
+      #item_counter(figure.where(kind: "Priloga"), "Number of appendix") 
+      #item_counter(page, "Number of appendix pages")
+
+      #item_counter(bibliography, "Number of references") 
 
 
       Mentor: #mentor
@@ -253,21 +258,24 @@
       #if somentor != none [
         Co-mentor: #somentor
       ]
+      #v(2em)
+      
+      Keywords: #key_words.join(", ")
 
-      Keywords: #kljucne_besede.join(", ")
-
-      Abstract: #abstract
+      Abstract: 
+      #v(1em)
+      #abstract
       
       
     ]
   ]
 
   // -------- TABLES ----------
-  let tablepage(target, title) = locate(loc => {
-    let count = counter(target).final(loc).first()
+  let tablepage(outlin) = locate(loc => {
+    let count = counter(outlin.target).final(loc).first()
 
     if count != 0 {
-      page(header: header("I"), outline(target: target, title: title))
+      page(header: header("I"), outline(..outlin))
     } else {
       none
     }
@@ -276,19 +284,34 @@
   
   set page(header: header("1"))
   
-  tablepage(heading, "Kazalo vsebine")
+  tablepage((target: heading, title: if text_lang =="sl" {"Kazalo vsebine"} else {"Table of contents"}))
   
 
-  tablepage(figure.where(kind: table), "Kazalo preglednic")// todo tables?
+  tablepage((target: figure.where(kind: table), title: if text_lang == "sl" {"Kazalo preglednic"} else {"Index of tables"}))
 
-  tablepage(figure.where(kind: image), "Kazalo slik in grafikonov")
+  tablepage((target: figure.where(kind: image), title: if text_lang == "sl" {"Kazalo slik in grafikonov"} else {"Index of images and graphs"}))
 
-  tablepage(figure.where(kind: raw), "Kazalo prilog")// TODO priloge
+
+
+  show outline.entry: it => {
+    let f = it.body.children
+
+    [\ ] + upper(f.at(0)) + [ ] + f.at(2) + h(2em) + f.at(4)
+  }
+  
+  tablepage((
+    target: figure.where(kind: "Priloga"), 
+    title: if text_lang == "sl" {
+      "Kazalo prilog"
+    } else {
+      "Index of Attachments"
+    },
+  ))
   
   // kratice
   if kratice != none {
     page(header: header("I"))[
-      *Kratice*
+      *Seznam kratic*
       
       #kratice.map( pair => {
         let short = pair.at(0)
@@ -314,6 +337,9 @@
       it
     }
   }
+
+  show figure.where(kind: "Priloga"): it => {
+  }
   
   // Main body.
   set par(justify: true)
@@ -327,35 +353,37 @@
 
   pagebreak()
   bibliography(
-    "my_references.bib", 
+    bib_file, 
     style: "ieee",
     title: "Viri in literatura"
   )
-  
+
+  counter(page).update(0)
   let priloga_counter = counter("priloga")
-  
-  let prilogb(x) = locate(loc => {
+  priloga_counter.step()
 
-    let a = priloga_counter.at(loc).first()
-    
-    let cnt = [
-      #figure(supplement: [Priloga], kind: "Priloga",[])
-      #label("Pr_" + str(a))
-      #x 
-    ]
-    cnt
-  })
-
-  
-
-  for name in priloge {
-    priloga_counter.step()
-    
-    set page(
-      header: align(right)[Priloga #priloga_counter.display("A")], 
-        header-ascent: 1cm
-    )
-    prilogb(name)
+  let priloga(content) = {
+    locate(loc => {
+      let a = priloga_counter.at(loc).first()
+      [
+        #figure(
+          supplement: [Priloga], 
+          kind: "Priloga",
+          numbering: "A",
+          caption: text( style: "italic", content.at(0)),
+          [])
+        #label("priloga_" + str(a))
+        #content.at(1)
+        #priloga_counter.step()
+      ]
+    })
   }
-  
+  set page(
+        header: align(right)[Priloga #priloga_counter.display("A")],
+        header-ascent: 1cm,
+      )
+  for name in priloge {
+    priloga(name)
+    pagebreak(weak: true)
+  }
 }
