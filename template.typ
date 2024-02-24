@@ -322,7 +322,7 @@
   // kratice
   if kratice != none {
     page(header: header("I"))[
-      *Seznam kratic*
+      #upper(text(weight: "bold", size: 18pt, if text_lang == "en" [list of abbreviations] else [Seznam kratic]))
       
       #kratice.map( pair => {
         let short = pair.at(0)
