@@ -378,7 +378,7 @@
       let a = priloga_counter.at(loc).first()
       [
         #figure(
-          supplement: [Priloga], 
+          supplement: if text_lang == "en" [Attachment] else [Priloga],
           kind: "Priloga",
           numbering: "A",
           caption: text( style: "italic", content.at(0)),
