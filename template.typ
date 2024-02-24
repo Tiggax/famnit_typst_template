@@ -1,3 +1,6 @@
+// Made By Tilen Gimpelj
+// questions and suggestions => https://github.com/Tiggax/famnit_typst_template
+
 #let col = (
   gray: rgb(128,128,128),
 )
