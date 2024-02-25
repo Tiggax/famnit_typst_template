@@ -17,8 +17,8 @@
   ključne_besede: ("Typst", "Zaključna naloga", "Pisanje", "Navodila"),
   key_words: ("Typst", "Final work", "Writing", "Tutorial"),
   kratice: (
-    ("Famnit", "Fakulteta za matematiko naravoslovje in informacijske tehnologije"),
-    ("PDF","Portable document format"),
+    "Famnit": "Fakulteta za matematiko naravoslovje in informacijske tehnologije",
+    "PDF": "Portable document format",
   ),
   priloge: (
     "Raw koda": raw(read("sample.typ"), lang: "typst", block: true),

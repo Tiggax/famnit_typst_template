@@ -36,7 +36,7 @@
   date: datetime(day: 1, month: 1, year: 2024),
   zahvala: none,
   kratice: (
-    ("short", "long")
+    ("short": "long")
   ),
   priloge: (),
   bib_file: "bibliography.bib",
@@ -326,11 +326,8 @@
   if kratice != none {
     page(header: header("I"))[
       #upper(text(weight: "bold", size: 18pt, if text_lang == "en" [list of abbreviations] else [Seznam kratic]))
-      
-      #kratice.map( pair => {
-        let short = pair.at(0)
-        let desc = pair.at(1)
-        
+
+      #kratice.pairs().map( ((short,desc)) => {
         [/ #short: #desc #label(short)]
       }).join("")
       #counter(page).update(0)
@@ -339,7 +336,7 @@
   }
 
   show ref: it => {
-    if it.element in kratice.map(p => [#p.at(1)]) {
+    if it.element in kratice.values().map(p => [#p]) {
       let tar = str(it.target)
       if it.citation.supplement != none {
         let sup = it.citation.supplement
