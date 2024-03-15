@@ -1,4 +1,4 @@
-#import "template.typ": *
+#import "template.typ": project
 #import "priloge.typ" as pr
 
 #let input = (
@@ -38,7 +38,7 @@
   /* Additional options, defaults shown
   kraj: "Koper",
   */
-  text_lang: "en", // this can be chaged to "en" for english works.
+  text_lang: "en", // this can be chaged to "sl" for slovene works, there are small differences for it.
 
 )
 
