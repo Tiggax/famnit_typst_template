@@ -1,4 +1,4 @@
-#import "template.typ": project
+#import "@preview/famnit:0.1.0": project
 #import "attachments.typ" as pr
 
 #let input = (
@@ -15,7 +15,7 @@
     "PDF": "Portable document format",
   ),
   priloge: (
-    "Raw koda": raw(read("sample.typ"), lang: "typst", block: true),
+    "Raw koda": raw(read("example.typ"), lang: "typst", block: true),
     "some obscurly long ass text that would be so long that it goes into another line to test. But hey you still need more words for it to go there.": pr.a, // sample of importing priloge.
   ),
   zahvala: [
@@ -33,7 +33,11 @@
   naslov: "Naslov zaključne naloge",
   title: "Title of the final work",
 
-  bib_file: "my_references.bib",
+  bib_file: bibliography(
+    "my_references.bib",
+    style: "ieee",
+    title: [Bibliography],
+  ),
   ..input, // Dodajanje večjega dela stvari za lepšo preglednost.
   /* Additional options, defaults shown
   kraj: "Koper",
@@ -73,4 +77,4 @@ or a table:
   )
 )
 
-Referencing is simple as doing @daewin_1859_on
+Referencing is simple as doing @darwin_1859_on
