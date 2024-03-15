@@ -1,6 +1,5 @@
 // Made By Tilen Gimpelj
 // questions and suggestions => https://github.com/Tiggax/famnit_typst_template
-
 #let col = (
   gray: rgb(128,128,128),
 )
@@ -82,7 +81,7 @@
   show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
   show heading.where(level: 3): it => text(size: 12pt, it)
   show heading.where(level: 4): it => text(size: 12pt, weight: "regular", it)
-
+  
   show figure.caption: it => text(size: 10pt,it)
 
   show bibliography: set heading(numbering: "1.1")
@@ -325,8 +324,9 @@
   // kratice
   if kratice != none {
     page(header: header("I"))[
-      #upper(text(weight: "bold", size: 18pt, if text_lang == "en" [list of abbreviations] else [Seznam kratic]))
 
+      #upper(text(weight: "bold", size: 14pt, if text_lang == "en" [list of abbreviations] else [Seznam kratic]))
+      
       #kratice.pairs().map( ((short,desc)) => {
         [/ #short: #desc #label(short)]
       }).join("")
@@ -366,7 +366,7 @@
   bibliography(
     bib_file, 
     style: "ieee",
-    title: if text_lang == "en" [Bibliography and Sources] else [Viri in literatura],
+    title: if text_lang == "en" [Bibliography] else [Viri in literatura],
   )
 
   counter(page).update(0)
@@ -390,7 +390,7 @@
     })
   }
   set page(
-        header: align(right)[Priloga #priloga_counter.display("A")],
+        header: align(right)[#if text_lang == "en" [Attachment] else [Priloga] #priloga_counter.display("A")],
         header-ascent: 1cm,
       )
   for name in priloge {
