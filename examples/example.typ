@@ -93,6 +93,5 @@ or a table:
   )
 )
 
-
-Referenciranje del je enostavno kot v @darwin_1859_on
+Referencing is simple as doing @daewin_1859_on
 
