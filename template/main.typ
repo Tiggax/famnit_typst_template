@@ -32,10 +32,15 @@
 	zahvala: [
 		you can add an acknowlegment.
 	],
+	
+  	bib_file: bibliography(
+    	"my_references.bib",
+    	style: "ieee",
+    	title: [Bibliography],
+  	),
 
 	/* Additional content and their defaults
 	kraj: "Koper",
-	bib_file: "bibliography.bib",
 	*/
 )
 

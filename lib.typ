@@ -38,7 +38,7 @@
     ("short": "long")
   ),
   priloge: (),
-  bib_file: "bibliography.bib",
+  bib_file: none,
   text_lang: "sl",
   body,
 ) = {
@@ -363,11 +363,7 @@
   [#metadata(none) <body_end>]
 
   pagebreak()
-  bibliography(
-    bib_file, 
-    style: "ieee",
-    title: if text_lang == "en" [Bibliography] else [Viri in literatura],
-  )
+  if bib_file != none {bib_file}
 
   counter(page).update(0)
   let priloga_counter = counter("priloga")
