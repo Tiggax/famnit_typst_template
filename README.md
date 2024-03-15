@@ -64,6 +64,10 @@ This is a Typst template for FAMNIT final work.
 // Your content goes below.
 
 ```
+## Abbreviations (kratice)
+
+You can specify Abbreviations at the start as an attribute `kratice` and pass it a dictionary of the abbriviation and it's explanation.
+Then you can reference them in text using `@<short name>` to create a link to it.
 
 ## Attachments
 
