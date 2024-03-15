@@ -1,5 +1,5 @@
 #import "template.typ": project
-#import "priloge.typ" as pr
+#import "attachments.typ" as pr
 
 #let input = (
   izvleček: [
