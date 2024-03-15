@@ -1,12 +1,6 @@
 #import "template.typ": *
 #import "priloge.typ" as pr
 
-#show raw.where(block: true): block.with(
-  fill: luma(240),
-  inset: 10pt,
-  radius: 4pt,
-)
-
 #let input = (
   izvleček: [
     To je krako delo spisano za pomoč pri uporabi Typsta za delo zaključnega dela. V izvlečku se uporabi največ 250 besed. Tu se izpiše probleme, metode, rezultate, ključne ugotovitve in njihov pomen.
@@ -48,20 +42,6 @@
 
 )
 
-#show link: it => { // show rule
-  if type(it.dest) == str and it.dest.contains("http") {
-    text(weight: "thin", underline(it), fill: navy)
-  } else {
-    it
-  }
-}
-
-#show "Priloga": it => {
-  "Attachment"
-}
-
-
-
 = Uvod
 
 This @PDF and its source-code in @priloga_1 are for demonstration of the template.
@@ -94,4 +74,3 @@ or a table:
 )
 
 Referencing is simple as doing @daewin_1859_on
-
