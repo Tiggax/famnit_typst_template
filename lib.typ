@@ -173,12 +173,6 @@
     let p_cnt = counter(page)
     [#p_cnt.at(query(<body_end>, loc).first().location()).first()]
   })
-
-  let content_or_none(x) = {
-    if x != none {
-      x
-    } else {
-      none
     }
   }
 
