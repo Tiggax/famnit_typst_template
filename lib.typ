@@ -204,8 +204,17 @@
       
       #item_counter(figure.where(kind: "Priloga"), "Število prilog")
       #item_counter(page, "Št. strani prilog")
-      
-      #item_counter(bibliography, "Število referenc")
+
+      #context {
+        let cnt = query(ref).filter(it => it.element == none).map(it => it.target).dedup().len()
+        if int(cnt) > 0 {
+          let a = [Število referenc: #cnt]
+          style( s => {
+            let m = measure(a, s)
+            a + h(11em - m.width)
+          })
+        }
+      }
 
       Mentor: #mentor
 
@@ -253,7 +262,16 @@
       #item_counter(figure.where(kind: "Priloga"), "Number of appendix") 
       #item_counter(page, "Number of appendix pages")
 
-      #item_counter(bibliography, "Number of references") 
+      #context {
+        let cnt = query(ref).filter(it => it.element == none).map(it => it.target).dedup().len()
+        if int(cnt) > 0 {
+          let a = [Number of references: #cnt]
+          style( s => {
+            let m = measure(a, s)
+            a + h(11em - m.width)
+          })
+        }
+      }
 
 
       Mentor: #mentor
