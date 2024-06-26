@@ -35,6 +35,7 @@
     sl: ("ss","se"),
     ),
   somentor: none,
+  work_mentor: none,
   kraj: "Koper",
   date: datetime(day: 1, month: 1, year: 2024),
   zahvala: none,
@@ -151,6 +152,7 @@
       Študijski program: #studij\
       Mentor: #display_name(mentor)\
       #if somentor != none [Somentor: #display_name(somentor)\ ]
+      #if work_mentor != none [Delovni mentor: #display_name(work_mentor)\ ]
     ]
     #align(bottom + center)[
       #kraj, #date.year()
@@ -227,6 +229,7 @@
 
       Mentor: #display_name(mentor)\
       #if somentor != none [Somentor: #display_name(somentor)\ ]
+      #if work_mentor != none [Delovni mentor: #display_name(work_mentor)\ ]
 
       #v(2em)
       Ključne besede: #ključne_besede.join(", ")
@@ -282,7 +285,8 @@
 
 
       Mentor: #display_name(mentor, lang: "en")\
-      #if somentor != none [Somentor: #display_name(somentor, lang: "en")\ ]
+      #if somentor != none [Co-mentor: #display_name(somentor, lang: "en")\ ]
+      #if work_mentor != none [work mentor: #display_name(work_mentor, lang: "en")\ ]
       #v(2em)
       
       Keywords: #key_words.join(", ")
