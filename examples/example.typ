@@ -1,4 +1,4 @@
-#import "@preview/sunny-famnit:0.1.0": project
+#import "@preview/sunny-famnit:0.1.1": project
 #import "attachments.typ" as pr
 
 #let input = (
@@ -27,8 +27,12 @@
   date: datetime(day: 1, month: 1, year: 2024),
   author: "Tilen Gimpelj",
   studij: "Bioinformatika",
-  mentor:"dr. Oge So-Kul",
-  somentor: none, // optional somentor
+  mentor:(
+    name: "Oge So-Kul", 
+    sl: ("dr.",""),
+    en: ("",".phD"),
+    ),
+  somentor: none, // optional somentor, written in the same way as mentor
 
   naslov: "Naslov zaključne naloge",
   title: "Title of the final work",
