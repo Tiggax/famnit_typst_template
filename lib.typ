@@ -29,7 +29,11 @@
   abstract: [],
   author: "Samo Primer",
   studij: "Ime študijskega programa",
-  mentor: "dr. Oge So-Kul",
+  mentor: (
+    name: "Oge So-Kul", 
+    en: ("es","ee"),
+    sl: ("ss","se"),
+    ),
   somentor: none,
   kraj: "Koper",
   date: datetime(day: 1, month: 1, year: 2024),
@@ -58,6 +62,11 @@
     #counter(page).display(dsp)
     #line(start: (0pt,-6pt), length: 100%, stroke: col.gray + 0.5pt)
   ]
+
+  // Displays the name with prepends and postpends
+  let display_name(name, lang: "sl") = {
+    [#name.at(lang).at(0) #name.name #name.at(lang).at(1)]
+  }
   
   set page(
     numbering: "1", 
@@ -140,8 +149,8 @@
     #align(left)[
       Ime in priimek: #author\
       Študijski program: #studij\
-      Mentor: #mentor\
-      #if somentor != none [Somentor: #somentor\ ]
+      Mentor: #display_name(mentor)\
+      #if somentor != none [Somentor: #display_name(somentor)\ ]
     ]
     #align(bottom + center)[
       #kraj, #date.year()
@@ -216,11 +225,9 @@
         }
       }
 
-      Mentor: #mentor
+      Mentor: #display_name(mentor)\
+      #if somentor != none [Somentor: #display_name(somentor)\ ]
 
-      #if somentor != none [
-        Somentor: #somentor
-      ]
       #v(2em)
       Ključne besede: #ključne_besede.join(", ")
 
@@ -274,11 +281,8 @@
       }
 
 
-      Mentor: #mentor
-
-      #if somentor != none [
-        Co-mentor: #somentor
-      ]
+      Mentor: #display_name(mentor, lang: "en")\
+      #if somentor != none [Somentor: #display_name(somentor, lang: "en")\ ]
       #v(2em)
       
       Keywords: #key_words.join(", ")
