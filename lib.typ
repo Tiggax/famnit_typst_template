@@ -92,6 +92,17 @@
   show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
   show heading.where(level: 3): it => text(size: 12pt, it)
   show heading.where(level: 4): it => text(size: 12pt, weight: "regular", it)
+
+
+
+
+  show outline.where(target: selector(heading)): it => {
+      show outline.entry.where(level: 1)
+      .or(outline.entry.where(level: 2)): it => upper(it)
+      it
+  }
+
+
   
   show figure.caption: it => text(size: 10pt,it)
 
