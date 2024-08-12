@@ -45,6 +45,7 @@
   priloge: (),
   bib_file: none,
   text_lang: "sl",
+  cover_page: true,
   body,
 ) = {
   let auth_dict = split_author(author)
@@ -99,6 +100,7 @@
   
   
   // --------- COVER PAGE --------------
+  if cover_page {
   page(header: none, margin: (bottom: 5cm))[
     #set text(size: 14pt, spacing: 0.28em)
     #set align(center)
@@ -126,6 +128,7 @@
     #set align(right + bottom)
     #upper(author)
   ]
+  }
   
   // --------- Header ---------------
   page(header:none)[
