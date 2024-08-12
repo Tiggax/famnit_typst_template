@@ -87,10 +87,11 @@
   show footnote: it => text(size: 10pt, it)
   
   set heading(numbering: "1.1   ")
-
+  
   show heading: set block(spacing: 2em)
+
   show heading.where(level: 1): it => text(size: 14pt, weight: "bold",upper(it))
-  show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
+  show heading.where(level: 2): it => text(size: 14pt, weight: "regular", upper(it))
   show heading.where(level: 3): it => text(size: 12pt, it)
   show heading.where(level: 4): it => text(size: 12pt, weight: "regular", it)
 
@@ -114,33 +115,33 @@
   
   // --------- COVER PAGE --------------
   if cover_page {
-  page(header: none, margin: (bottom: 5cm))[
-    #set text(size: 14pt, spacing: 0.28em)
-    #set align(center)
+    page(header: none, margin: (bottom: 5cm))[
+      #set text(size: 14pt, spacing: 0.28em)
+      #set align(center)
 
-    
-    UNIVERZA NA PRIMORSKEM\
-    FAKULTETA ZA MATEMATIKO, NARAVOSLOVJE IN\
-    INFORMACIJSKE TEHNOLOGIJE
+      
+      UNIVERZA NA PRIMORSKEM\
+      FAKULTETA ZA MATEMATIKO, NARAVOSLOVJE IN\
+      INFORMACIJSKE TEHNOLOGIJE
 
-    #align(center + horizon)[
-      ZAKLJUČNA NALOGA
+      #align(center + horizon)[
+        ZAKLJUČNA NALOGA
 
-      #if text_lang == "en" {
-        [(FINAL PROJECT PAPER)]
-      }
+        #if text_lang == "en" {
+          [(FINAL PROJECT PAPER)]
+        }
+      ]
+      #align(center + horizon)[
+        #set text(size: 18pt)
+        #upper(naslov)
+
+        #if text_lang == "en" {
+          [(#upper(title))]
+        }
+      ]
+      #set align(right + bottom)
+      #upper(author)
     ]
-    #align(center + horizon)[
-      #set text(size: 18pt)
-      #upper(naslov)
-
-      #if text_lang == "en" {
-        [(#upper(title))]
-      }
-    ]
-    #set align(right + bottom)
-    #upper(author)
-  ]
   }
   
   // --------- Header ---------------
