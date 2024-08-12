@@ -184,7 +184,7 @@
   
   // ---- Ključna dokumentacija ----
   page()[
-    #h(1fr)*Ključna dokumentacijska informacija*
+    *Ključna dokumentacijska informacija*
     
     #box(
       stroke: black + 0.5pt,
@@ -241,7 +241,7 @@
   // ---- Ključna dokumentacija (eng)----
 
   page()[
-    #h(1fr)*Key document information*
+    *Key document information*
     
     #box(
       stroke: black + 0.5pt,
