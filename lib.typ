@@ -86,7 +86,7 @@
 
   show footnote: it => text(size: 10pt, it)
   
-  set heading(numbering: "1.1")
+  set heading(numbering: "1.1   ")
 
   show heading.where(level: 1): it => text(size: 14pt, weight: "bold",upper(it))
   show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
