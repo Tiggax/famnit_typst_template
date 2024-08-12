@@ -88,6 +88,7 @@
   
   set heading(numbering: "1.1   ")
 
+  show heading: set block(spacing: 2em)
   show heading.where(level: 1): it => text(size: 14pt, weight: "bold",upper(it))
   show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
   show heading.where(level: 3): it => text(size: 12pt, it)
