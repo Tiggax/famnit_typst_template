@@ -164,14 +164,7 @@
     #counter(page).update(1)
   ]
 
-  // ----------- zahala -----------------
-  if zahvala != none {
-    page()[
-      #text(weight: "bold", size: 18pt, if text_lang == "en" [Acknowledgement] else [Zahvala])
 
-      #zahvala
-    ]
-  }
   let item_counter(target, prefix) = context {
     let cnt = counter(target).final().first()
     if cnt > 0 {
@@ -301,6 +294,15 @@
       
     ]
   ]
+  
+  // ----------- zahala -----------------
+  if zahvala != none {
+    page()[
+      #text(weight: "bold", size: 18pt, if text_lang == "en" [Acknowledgement] else [Zahvala])
+
+      #zahvala
+    ]
+  }
 
   // -------- TABLES ----------
 
