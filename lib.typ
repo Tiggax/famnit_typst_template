@@ -96,7 +96,7 @@
 
 
 
-
+  set outline(fill: repeat[.#h(8pt)], indent: 2em)
   show outline.where(target: selector(heading)): it => {
       show outline.entry.where(level: 1)
       .or(outline.entry.where(level: 2)): it => upper(it)
