@@ -105,6 +105,7 @@
 
   
   show figure.caption: it => text(size: 10pt,it)
+  show figure.where(kind: table): set figure.caption(position: top)
 
   show bibliography: set heading(numbering: "1.1")
   
