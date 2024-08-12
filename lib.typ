@@ -419,7 +419,7 @@
       ]
   }
   set page(
-        header: align(right)[#if text_lang == "en" [Attachment] else [Priloga] #priloga_counter.display("A")],
+        header: align(left)[#if text_lang == "en" [Attachment] else [Priloga] #priloga_counter.display("A")],
         header-ascent: 1cm,
       )
   for name in priloge {
