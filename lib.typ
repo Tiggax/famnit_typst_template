@@ -59,7 +59,7 @@
     #v(1.5cm)
     
     #surname_i(author) #naslov.\
-    Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije,#date.year()
+    Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije, #date.year()
     #h(1fr)
     #counter(page).display(dsp)
     #line(start: (0pt,-6pt), length: 100%, stroke: col.gray + 0.5pt)
