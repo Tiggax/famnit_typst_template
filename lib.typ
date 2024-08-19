@@ -336,9 +336,9 @@
   tablepage((target: heading, title: if text_lang =="sl" {"Kazalo vsebine"} else {"Table of contents"}))
   
 
-  tablepage((target: figure.where(kind: table), title: if text_lang == "sl" {"Kazalo preglednic"} else {"Index of tables"}))
+  tablepage((target: figure.where(kind: table), title: if text_lang == "sl" {"Kazalo preglednic"} else {"list of tables"}))
 
-  tablepage((target: figure.where(kind: image), title: if text_lang == "sl" {"Kazalo slik in grafikonov"} else {"Index of images and graphs"}))
+  tablepage((target: figure.where(kind: image), title: if text_lang == "sl" {"Kazalo slik in grafikonov"} else {"list of figures"}))
 
 
 
