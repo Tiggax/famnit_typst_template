@@ -353,7 +353,7 @@
     title: if text_lang == "sl" {
       "Kazalo prilog"
     } else {
-      "Index of Attachments"
+      "List of Appendices"
     },
   ))
   
@@ -410,7 +410,7 @@
     
       [
         #figure(
-          supplement: if text_lang == "en" [Attachment] else [Priloga],
+          supplement: if text_lang == "en" [Appendix] else [Priloga],
           kind: "Priloga",
           numbering: "A",
           caption: text( style: "italic", content.at(0)),
