@@ -67,7 +67,7 @@
 
   // Displays the name with prepends and postpends
   let display_name(name, lang: "sl") = {
-    [#name.at(lang).at(0) #name.name #name.at(lang).at(1)]
+    [#name.at(lang).at(0)#name.name#name.at(lang).at(1)]
   }
   
   set page(
@@ -420,11 +420,11 @@
         #priloga_counter.step()
       ]
   }
-  set page(
-        header: align(left)[#if text_lang == "en" [Attachment] else [Priloga] #priloga_counter.display("A")],
-        header-ascent: 1cm,
-      )
+  pagebreak(weak: true)
+  heading(numbering: none)[#if text_lang == "en" [APPENDICES] else [PRILOGE]] 
+
   for name in priloge {
+    align(left)[#if text_lang == "en" [Appendix] else [Priloga] #priloga_counter.display("A") #text(style: "italic", name.at(0))]
     priloga(name)
     pagebreak(weak: true)
   }
