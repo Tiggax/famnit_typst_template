@@ -424,7 +424,7 @@
   heading(numbering: none, outlined: false)[#if text_lang == "en" [APPENDICES] else [PRILOGE]] 
 
   for name in priloge {
-    align(left)[#if text_lang == "en" [Appendix] else [Priloga] #priloga_counter.display("A") #text(style: "italic", name.at(0))]
+    align(left)[#if text_lang == "en" {upper[Appendix]} else {upper[Priloga]} #priloga_counter.display("A") #text(style: "italic", name.at(0))]
     priloga(name)
     pagebreak(weak: true)
   }
