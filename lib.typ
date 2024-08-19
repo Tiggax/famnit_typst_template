@@ -421,6 +421,7 @@
       ]
   }
   pagebreak(weak: true)
+  set page(header: none)
   heading(numbering: none, outlined: false)[#if text_lang == "en" [APPENDICES] else [PRILOGE]] 
 
   for name in priloge {
