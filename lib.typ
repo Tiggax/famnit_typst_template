@@ -60,7 +60,7 @@
     #surname_i(author) #naslov.\
     Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije,#date.year()
     #h(1fr)
-    #counter(page).display(dsp)
+    #context counter(page).display(dsp)
     #line(start: (0pt,-6pt), length: 100%, stroke: col.gray + 0.5pt)
   ]
 
@@ -78,7 +78,6 @@
     footer: []
   )
   set text(
-    font: "Times New Roman", 
     lang: text_lang, 
     size: 12pt
   )
@@ -173,10 +172,9 @@
     let cnt = counter(target).final().first()
     if cnt > 0 {
       let a = [#prefix: #cnt]
-      style( s => {
-        let m = measure(a, s)
+        let m = measure(a)
         a + h(11em - m.width)
-      })
+      
     }
   }
 
@@ -220,10 +218,10 @@
         let cnt = query(ref).filter(it => it.element == none).map(it => it.target).dedup().len()
         if int(cnt) > 0 {
           let a = [Število referenc: #cnt]
-          style( s => {
-            let m = measure(a, s)
+          
+            let m = measure(a)
             a + h(11em - m.width)
-          })
+          
         }
       }
 
@@ -276,10 +274,10 @@
         let cnt = query(ref).filter(it => it.element == none).map(it => it.target).dedup().len()
         if int(cnt) > 0 {
           let a = [Number of references: #cnt]
-          style( s => {
-            let m = measure(a, s)
+          
+            let m = measure(a)
             a + h(11em - m.width)
-          })
+          
         }
       }
 
@@ -324,9 +322,12 @@
 
 
   show outline.entry: it => {
+    if it.at("body", default: none) != none and it.body > 0 {
+      
     let f = it.body.children
 
     [\ ] + upper(f.at(0)) + [ ] + f.at(2) + h(2em) + f.at(4)
+    }
   }
   
   tablepage((
@@ -402,7 +403,7 @@
       ]
   }
   set page(
-        header: align(right)[#if text_lang == "en" [Attachment] else [Priloga] #priloga_counter.display("A")],
+        header: align(right)[#if text_lang == "en" [Attachment] else [Priloga] #context priloga_counter.display("A")],
         header-ascent: 1cm,
       )
   for name in priloge {
