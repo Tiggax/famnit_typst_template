@@ -45,6 +45,7 @@
   priloge: (),
   bib_file: none,
   text_lang: "sl",
+  cover_page: true,
   body,
 ) = {
   let auth_dict = split_author(author)
@@ -58,7 +59,7 @@
     #v(1.5cm)
     
     #surname_i(author) #naslov.\
-    Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije,#date.year()
+    Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije, #date.year()
     #h(1fr)
     #context counter(page).display(dsp)
     #line(start: (0pt,-6pt), length: 100%, stroke: col.gray + 0.5pt)
@@ -66,7 +67,7 @@
 
   // Displays the name with prepends and postpends
   let display_name(name, lang: "sl") = {
-    [#name.at(lang).at(0) #name.name #name.at(lang).at(1)]
+    [#name.at(lang).at(0)#name.name#name.at(lang).at(1)]
   }
   
   set page(
@@ -84,47 +85,63 @@
 
   show footnote: it => text(size: 10pt, it)
   
-  set heading(numbering: "1.1")
+  set heading(numbering: "1.1   ")
+  
+  show heading: set block(spacing: 2em)
 
   show heading.where(level: 1): it => text(size: 14pt, weight: "bold",upper(it))
-  show heading.where(level: 2): it => text(size: 14pt, weight: "bold", it)
+  show heading.where(level: 2): it => text(size: 14pt, weight: "regular", upper(it))
   show heading.where(level: 3): it => text(size: 12pt, it)
   show heading.where(level: 4): it => text(size: 12pt, weight: "regular", it)
+
+
+
+  set outline(fill: repeat[.#h(8pt)], indent: 2em)
+  show outline.where(target: selector(heading)): it => {
+      show outline.entry.where(level: 1)
+      .or(outline.entry.where(level: 2)): it => upper(it)
+      it
+  }
+
+
   
   show figure.caption: it => text(size: 10pt,it)
+  show figure.where(kind: table): set figure.caption(position: top)
 
   show bibliography: set heading(numbering: "1.1")
   
   
   
   // --------- COVER PAGE --------------
-  page(header: none, margin: (bottom: 5cm))[
-    #set text(size: 14pt, spacing: 0.28em)
-    #set align(center)
+  if cover_page {
+    page(header: none, margin: (bottom: 5cm))[
+      #set text(size: 14pt, spacing: 0.28em)
+      #set align(center)
 
-    
-    UNIVERZA NA PRIMORSKEM\
-    FAKULTETA ZA MATEMATIKO, NARAVOSLOVJE IN\
-    INFORMACIJSKE TEHNOLOGIJE
+      
+      UNIVERZA NA PRIMORSKEM\
+      FAKULTETA ZA MATEMATIKO, NARAVOSLOVJE IN\
+      INFORMACIJSKE TEHNOLOGIJE
 
-    #align(center + horizon)[
-      ZAKLJUČNA NALOGA
+      #align(center + horizon)[
+        ZAKLJUČNA NALOGA
 
-      #if text_lang == "en" {
-        [(FINAL PROJECT PAPER)]
-      }
+        #if text_lang == "en" {
+          [(FINAL PROJECT PAPER)]
+        }
+      ]
+      #align(center + horizon)[
+        #set text(size: 18pt)
+        #upper(naslov)
+
+        #if text_lang == "en" {
+          [(#upper(title))]
+        }
+      ]
+      #set align(right + bottom)
+      #upper(author)
     ]
-    #align(center + horizon)[
-      #set text(size: 18pt)
-      #upper(naslov)
-
-      #if text_lang == "en" {
-        [(#upper(title))]
-      }
-    ]
-    #set align(right + bottom)
-    #upper(author)
-  ]
+  }
   
   // --------- Header ---------------
   page(header:none)[
@@ -160,14 +177,7 @@
     #counter(page).update(1)
   ]
 
-  // ----------- zahala -----------------
-  if zahvala != none {
-    page()[
-      #text(weight: "bold", size: 18pt, if text_lang == "en" [Acknowledgement] else [Zahvala])
 
-      #zahvala
-    ]
-  }
   let item_counter(target, prefix) = context {
     let cnt = counter(target).final().first()
     if cnt > 0 {
@@ -186,7 +196,7 @@
   
   // ---- Ključna dokumentacija ----
   page()[
-    #h(1fr)*Ključna dokumentacijska informacija*
+    *Ključna dokumentacijska informacija*
     
     #box(
       stroke: black + 0.5pt,
@@ -243,7 +253,7 @@
   // ---- Ključna dokumentacija (eng)----
 
   page()[
-    #h(1fr)*Key document information*
+    *Key document information*
     
     #box(
       stroke: black + 0.5pt,
@@ -296,6 +306,15 @@
       
     ]
   ]
+  
+  // ----------- zahala -----------------
+  if zahvala != none {
+    page()[
+      #text(weight: "bold", size: 18pt, if text_lang == "en" [Acknowledgement] else [Zahvala])
+
+      #zahvala
+    ]
+  }
 
   // -------- TABLES ----------
 
@@ -315,9 +334,9 @@
   tablepage((target: heading, title: if text_lang =="sl" {"Kazalo vsebine"} else {"Table of contents"}))
   
 
-  tablepage((target: figure.where(kind: table), title: if text_lang == "sl" {"Kazalo preglednic"} else {"Index of tables"}))
+  tablepage((target: figure.where(kind: table), title: if text_lang == "sl" {"Kazalo preglednic"} else {"list of tables"}))
 
-  tablepage((target: figure.where(kind: image), title: if text_lang == "sl" {"Kazalo slik in grafikonov"} else {"Index of images and graphs"}))
+  tablepage((target: figure.where(kind: image), title: if text_lang == "sl" {"Kazalo slik in grafikonov"} else {"list of figures"}))
 
 
 
@@ -335,7 +354,7 @@
     title: if text_lang == "sl" {
       "Kazalo prilog"
     } else {
-      "Index of Attachments"
+      "List of Appendices"
     },
   ))
   
@@ -392,7 +411,7 @@
     
       [
         #figure(
-          supplement: if text_lang == "en" [Attachment] else [Priloga],
+          supplement: if text_lang == "en" [Appendix] else [Priloga],
           kind: "Priloga",
           numbering: "A",
           caption: text( style: "italic", content.at(0)),
@@ -407,6 +426,7 @@
         header-ascent: 1cm,
       )
   for name in priloge {
+    align(left)[#if text_lang == "en" {upper[Appendix]} else {upper[Priloga]} #priloga_counter.display("A") #text(style: "italic", name.at(0))]
     priloga(name)
     pagebreak(weak: true)
   }
