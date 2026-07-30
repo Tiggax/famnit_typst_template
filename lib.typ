@@ -21,6 +21,8 @@
 
 
 #let project(
+  // Can be "undergrad" or "masters"
+  type: "undergrad",
   naslov: "Naslov zaključne naloge",
   title: "Title of the final work",
   ključne_besede: ("typst", "je", "zakon!"),
@@ -49,12 +51,36 @@
   body,
 ) = {
   let auth_dict = split_author(author)
+
+  let tmpls = if type == "undergrad" {
+    (
+      zak_nal: (
+        sl: "Zaključna naloga",
+        en: "Final Project paper"
+      ),
+      kdi: (
+        sl: "Naslov zaključne naloge",
+        en: "Title of the final project paper"
+      )
+    )
+  }  else {
+    (
+      zak_nal: (
+        sl: "Magistrsko delo",
+        en: "Master's thesis"
+      ),
+      kdi: (
+        sl: "Naslov magistrskega dela",
+        en: "Title of the thesis"
+      )
+    )
+  }
   
   
   set document(author: (author), title: naslov, keywords: ključne_besede)
 
   let header(dsp) = [
-    #set text(size: 10pt, fill: col.gray, top-edge: "cap-height")
+    #set text(size: 10pt, top-edge: "cap-height")
     #set align(top)
     #v(1.5cm)
     
@@ -62,7 +88,7 @@
     Univerza na Primorskem, Fakulteta za matematiko, naravoslovje in informacijske tehnologije, #date.year()
     #h(1fr)
     #context counter(page).display(dsp)
-    #line(start: (0pt,-6pt), length: 100%, stroke: col.gray + 0.5pt)
+    #line(start: (0pt,-6pt), length: 100%, stroke: 0.5pt)
   ]
 
   // Displays the name with prepends and postpends
@@ -96,7 +122,9 @@
 
 
 
-  set outline(fill: repeat[.#h(8pt)], indent: 2em)
+  set outline(indent: 2em)
+  set outline.entry(fill: repeat[.#h(8pt)])
+  
   show outline.where(target: selector(heading)): it => {
       show outline.entry.where(level: 1)
       .or(outline.entry.where(level: 2)): it => upper(it)
@@ -105,7 +133,7 @@
 
 
   
-  show figure.caption: it => text(size: 10pt,it)
+  show figure.caption: set text(10pt)
   show figure.where(kind: table): set figure.caption(position: top)
 
   show bibliography: set heading(numbering: "1.1")
@@ -124,10 +152,10 @@
       INFORMACIJSKE TEHNOLOGIJE
 
       #align(center + horizon)[
-        ZAKLJUČNA NALOGA
+        #upper(tmpls.zak_nal.sl)
 
         #if text_lang == "en" {
-          [(FINAL PROJECT PAPER)]
+          [#upper(tmpls.zak_nal.en)]
         }
       ]
       #align(center + horizon)[
@@ -153,9 +181,9 @@
 
     #align(center + horizon)[
       #set text(size: 12pt)
-      Zaključna naloga
+      #tmpls.zak_nal.sl
       #if text_lang == "en" {
-        [\ (Final project paper)]
+        [\ (#tmpls.zak_nal.en)]
       }
 
       #text(size: 14pt)[*#naslov*]
@@ -206,7 +234,7 @@
       
       Ime in PRIIMEK: #auth_dict.name #upper(auth_dict.surname)
 
-      Naslov zaključne naloge: #naslov
+      #tmpls.kdi.sl: #naslov
 
       #v(2em)
       
@@ -263,7 +291,7 @@
       
       Name and SURNAME: #auth_dict.name #upper(auth_dict.surname)
 
-      Title of the final project paper: #title
+      #tmpls.kdi.en: #title
       
       #v(2em)
       
@@ -324,7 +352,8 @@
     if count != 0 {
       page(header: header("I"), outline(..outlin))
     } else {
-      none
+      "eee"
+      
     }
   }
   
@@ -341,21 +370,13 @@
 
 
   show outline.entry: it => {
-    if it.at("body", default: none) != none and it.body > 0 {
-      
-    let f = it.body.children
-
-    [\ ] + upper(f.at(0)) + [ ] + f.at(2) + h(2em) + f.at(4)
-    }
+    
+    it
   }
   
   tablepage((
     target: figure.where(kind: "Priloga"), 
-    title: if text_lang == "sl" {
-      "Kazalo prilog"
-    } else {
-      "List of Appendices"
-    },
+    title: if text_lang == "sl" {"Kazalo prilog"} else {"List of Appendices"}
   ))
   
   // kratice
@@ -386,8 +407,6 @@
     }
   }
 
-  show figure.where(kind: "Priloga"): it => {
-  }
   
   // Main body.
   set par(justify: true)
@@ -411,10 +430,10 @@
     
       [
         #figure(
-          supplement: if text_lang == "en" [Appendix] else [Priloga],
+          supplement: upper(if text_lang == "sl" [priloga] else [appendix]),
           kind: "Priloga",
           numbering: "A",
-          caption: text( style: "italic", content.at(0)),
+          caption: content.first(),
           [])
         #label("priloga_" + str(a))
         #content.at(1)
@@ -425,8 +444,14 @@
         header: align(right)[#if text_lang == "en" [Attachment] else [Priloga] #context priloga_counter.display("A")],
         header-ascent: 1cm,
       )
+  show figure: set align(left)
+  
+  show figure.caption: set text(12pt,style: "italic")
+  
+  
+  
+  
   for name in priloge {
-    align(left)[#if text_lang == "en" {upper[Appendix]} else {upper[Priloga]} #priloga_counter.display("A") #text(style: "italic", name.at(0))]
     priloga(name)
     pagebreak(weak: true)
   }
